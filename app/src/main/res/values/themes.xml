@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.MyApplication" parent="Base.Theme.MyApplication" />
+    <style name="Theme.MenuButton" parent="Theme.AppCompat.Light">
+<!--        <item name="android:colorButtonNormal">@android:color/black</item>-->
+    </style>
+
 </resources>
