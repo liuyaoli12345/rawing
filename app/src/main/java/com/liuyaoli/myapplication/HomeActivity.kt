@@ -41,7 +41,7 @@ class HomeActivity : AppCompatActivity(){
     }
 
     private fun showRecyclerView(){
-        recyclerView = findViewById(R.id.recycler)
+        recyclerView = findViewById(R.id.homeRecycler)
         recyclerView.layoutManager = LinearLayoutManager(this)
         val items = listOf<Any>(
             PlainTextBean("商鞅：疑事无功，疑行无名","置顶","史记"),

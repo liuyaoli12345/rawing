@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_marginHorizontal="15dp"
+    android:layout_marginVertical="5dp"
+    android:alpha="0.8"
+    android:background="@drawable/weather_item_shape">
+
+    <TextView
+        android:id="@+id/warning2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/air_quality"
+        android:text="  空气质量"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/air_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="57-良"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/warning2"
+        app:layout_constraintTop_toBottomOf="@+id/warning2" />
+
+    <TextView
+        android:id="@+id/aqi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="当前AQI(CN)为57"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@+id/air_level"
+        app:layout_constraintTop_toBottomOf="@+id/air_level" />
+</androidx.constraintlayout.widget.ConstraintLayout>
