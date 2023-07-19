@@ -8,10 +8,12 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
+import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.liuyaoli.myapplication.PostNewsActivity
 import com.liuyaoli.myapplication.R
 import com.liuyaoli.myapplication.R.*
 import com.liuyaoli.myapplication.WeatherActivity
@@ -37,6 +39,11 @@ class HomeFragment : Fragment() {
             // 在此处处理点击事件
             // 在这里执行页面跳转的代码
             val intent = Intent(this.context, WeatherActivity::class.java)
+            startActivity(intent)
+        }
+        val postNewsButton : ImageButton = view.findViewById(R.id.post_news_button)
+        postNewsButton.setOnClickListener {
+            val intent = Intent(this.context, PostNewsActivity::class.java)
             startActivity(intent)
         }
         return view

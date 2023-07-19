@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/home_page_search2"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/textbox_shape"
+        android:drawableLeft="@drawable/post_news_title"
+        android:drawablePadding="10dp"
+        android:hint="输入标题"
+        android:paddingStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/home_page_search3"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/textbox_shape"
+        android:drawableLeft="@drawable/post_news_abstract"
+        android:drawablePadding="10dp"
+        android:hint="输入摘要"
+        android:paddingStart="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/home_page_search4"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/textbox_shape"
+        android:drawableLeft="@drawable/post_news_content"
+        android:drawablePadding="10dp"
+        android:hint="输入正文"
+        android:paddingStart="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/home_page_search3"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/postNewsBackButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/transparent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/back_black" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="添加新闻条目"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/postNewsBackButton"
+        app:layout_constraintStart_toEndOf="@+id/postNewsBackButton"
+        app:layout_constraintTop_toTopOf="@+id/postNewsBackButton" />
+
+    <ImageButton
+        android:id="@+id/upload_thumbnails_button"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/add_image"
+        app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintStart_toStartOf="@+id/home_page_search2"
+        app:layout_constraintTop_toBottomOf="@+id/home_page_search2" />
+
+    <ImageButton
+        android:id="@+id/upload_head_img_button"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:backgroundTint="@color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/add_image"
+        app:layout_constraintBottom_toBottomOf="@+id/upload_thumbnails_button"
+        app:layout_constraintEnd_toEndOf="@+id/home_page_search2"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="@+id/upload_thumbnails_button" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"/>
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="缩略图"
+        app:layout_constraintEnd_toEndOf="@+id/upload_thumbnails_button"
+        app:layout_constraintStart_toStartOf="@+id/upload_thumbnails_button"
+        app:layout_constraintTop_toBottomOf="@+id/upload_thumbnails_button" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="头图"
+        app:layout_constraintEnd_toEndOf="@+id/upload_head_img_button"
+        app:layout_constraintStart_toStartOf="@+id/upload_head_img_button"
+        app:layout_constraintTop_toBottomOf="@+id/upload_head_img_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
