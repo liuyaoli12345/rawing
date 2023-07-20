@@ -15,7 +15,7 @@ class ImgAndTextViewHolder : RecyclerView.ViewHolder {
         private set
     var tvAuthor : TextView
     constructor(view : View) : super(view){
-        ivCover = view.findViewById(R.id.coverImg)
+        ivCover = view.findViewById(R.id.news_cover)
         tvTitle = view.findViewById(R.id.mainTitle)
         tvMsg = view.findViewById(R.id.Msg)
         tvAuthor = view.findViewById(R.id.Author)

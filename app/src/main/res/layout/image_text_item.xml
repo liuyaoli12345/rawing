@@ -20,7 +20,7 @@
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constrainedWidth="true"
-        app:layout_constraintEnd_toStartOf="@+id/coverImg"
+        app:layout_constraintEnd_toStartOf="@+id/news_cover"
         app:layout_constraintHorizontal_bias="0.236"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,7 +35,7 @@
 <!--        app:layout_constraintTop_toTopOf="@+id/mainTitle">-->
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/coverImg"
+        android:id="@+id/news_cover"
         android:layout_width="140dp"
         android:layout_height="140dp"
 
