@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:drawableLeft="@drawable/comment"
+        android:drawableLeft="@drawable/comment_button"
         android:gravity="center"
         android:text="666"
         android:textSize="15dp"
@@ -67,7 +67,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/video_item_cover"
-        app:srcCompat="@drawable/like" />
+        app:srcCompat="@drawable/like_button" />
 
     <TextView
         android:id="@+id/video_item_title"

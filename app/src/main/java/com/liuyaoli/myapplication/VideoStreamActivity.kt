@@ -25,21 +25,8 @@ class VideoStreamActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
+        initDetector()
         playVideoStream()
-        gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
-            override fun onFling(
-                e1: MotionEvent,
-                e2: MotionEvent,
-                velocityX: Float,
-                velocityY: Float
-            ): Boolean {
-                // 监听向下滑动事件，并切换到下一个视频
-                if (velocityY < -100) {
-                    playVideo("https://files.lsmcloud.top/dog_and_cat_playing.mp4")
-                }
-                return super.onFling(e1, e2, velocityX, velocityY)
-            }
-        })
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -59,6 +46,23 @@ class VideoStreamActivity : AppCompatActivity() {
         }
         player.playWhenReady = true
 //        player.play()
+    }
+
+    private fun initDetector(){
+        gestureDetector = GestureDetector(this, object : GestureDetector.SimpleOnGestureListener() {
+            override fun onFling(
+                e1: MotionEvent,
+                e2: MotionEvent,
+                velocityX: Float,
+                velocityY: Float
+            ): Boolean {
+                // 监听向下滑动事件，并切换到下一个视频
+                if (velocityY < -100) {
+                    playVideo("https://files.lsmcloud.top/dog_and_cat_playing.mp4")
+                }
+                return super.onFling(e1, e2, velocityX, velocityY)
+            }
+        })
     }
 
     private fun playVideo(uri:String){

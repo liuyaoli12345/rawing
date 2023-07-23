@@ -17,21 +17,29 @@ import com.liuyaoli.myapplication.PostNewsActivity
 import com.liuyaoli.myapplication.R
 import com.liuyaoli.myapplication.R.*
 import com.liuyaoli.myapplication.WeatherActivity
+import com.liuyaoli.myapplication.database.NewsDatabase
+import com.liuyaoli.myapplication.database.entity.NewsBriefEntity
 import com.liuyaoli.myapplication.homerecycler.HomeAdapter
 import com.liuyaoli.myapplication.homerecycler.ImgAndTextBean
 import com.liuyaoli.myapplication.homerecycler.PlainTextBean
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
-    private var weatherTransparentAnim: ConstraintLayout?=null
+    private var weatherTransparentAnim: ConstraintLayout? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: HomeAdapter
     private lateinit var view: View
+    private lateinit var db: NewsDatabase
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         view = inflater.inflate(layout.home_page, container, false)
+        db = NewsDatabase.getInstance(this.requireContext())
         showRecyclerView()
         showWeatherTransparent()
         val weatherLayout: ConstraintLayout = view.findViewById(R.id.weather)
@@ -41,7 +49,7 @@ class HomeFragment : Fragment() {
             val intent = Intent(this.context, WeatherActivity::class.java)
             startActivity(intent)
         }
-        val postNewsButton : ImageButton = view.findViewById(R.id.post_news_button)
+        val postNewsButton: ImageButton = view.findViewById(R.id.post_news_button)
         postNewsButton.setOnClickListener {
             val intent = Intent(this.context, PostNewsActivity::class.java)
             startActivity(intent)
@@ -49,29 +57,40 @@ class HomeFragment : Fragment() {
         return view
     }
 
-    private fun showWeatherTransparent(){
+    override fun onResume() {
+        super.onResume()
+        showRecyclerView()
+    }
+
+    private fun showWeatherTransparent() {
         weatherTransparentAnim = view.findViewById(R.id.weather)
 
         val anim = AnimationUtils.loadAnimation(this.context, R.anim.weather_transparent_anim)
         anim.interpolator = LinearInterpolator()
-        anim.repeatCount= Animation.INFINITE
+        anim.repeatCount = Animation.INFINITE
         weatherTransparentAnim?.startAnimation(anim)
     }
 
-    private fun showRecyclerView(){
+    private fun showRecyclerView() {
         recyclerView = view.findViewById(R.id.homeRecycler)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        val items = listOf<Any>(
-            PlainTextBean("商鞅：疑事无功，疑行无名","置顶","史记"),
-            ImgAndTextBean(drawable.simaqian,"太后：令吾百岁之后，皆鱼肉之矣","热点","司马迁"),
-            ImgAndTextBean(drawable.simaqian,"太后：令吾百岁之后，皆鱼肉之矣","热点","司马迁"),
-            ImgAndTextBean(drawable.simaqian,"太后：令吾百岁之后，皆鱼肉之矣","热点","司马迁"),
-            ImgAndTextBean(drawable.simaqian,"太后：令吾百岁之后，皆鱼肉之矣","热点","司马迁"),
-            ImgAndTextBean(drawable.simaqian,"太后：令吾百岁之后，皆鱼肉之矣","热点","司马迁"),
-            ImgAndTextBean(drawable.simaqian,"太后：令吾百岁之后，皆鱼肉之矣","热点","司马迁"),
-            ImgAndTextBean(drawable.simaqian,"太后：令吾百岁之后，皆鱼肉之矣","热点","司马迁")
-        )
-        adapter = HomeAdapter(items)
-        recyclerView.adapter = adapter
+        var news: List<NewsBriefEntity>?
+        val items = mutableListOf<Any>()
+        GlobalScope.launch(Dispatchers.IO) {
+            news = db.newsBriefDao.getAllNewsBrief()
+            withContext(Dispatchers.Main) {
+                news?.let {
+                    for (item in news!!) {
+                        if (item.coverUri.isEmpty()){
+                            items.add(PlainTextBean(item.newsId!!,item.title,item.status,item.author))
+                        } else {
+                            items.add(ImgAndTextBean(item.newsId!!,drawable.simaqian,item.title,item.status,item.author))
+                        }
+                    }
+                }
+                adapter = HomeAdapter(items)
+                recyclerView.adapter = adapter
+            }
+        }
     }
 }

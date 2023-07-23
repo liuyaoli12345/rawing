@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/home_page_search2"
+    <EditText
+        android:id="@+id/post_news_title"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
@@ -20,8 +20,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/home_page_search3"
+    <EditText
+        android:id="@+id/post_news_abstract"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_marginStart="10dp"
@@ -36,8 +36,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/home_page_search4"
+    <EditText
+        android:id="@+id/post_news_context"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="10dp"
@@ -52,7 +52,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/home_page_search3"
+        app:layout_constraintTop_toBottomOf="@+id/post_news_abstract"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageButton
@@ -78,25 +78,25 @@
 
     <ImageButton
         android:id="@+id/upload_thumbnails_button"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:layout_marginTop="15dp"
         android:backgroundTint="@color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/add_image"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintStart_toStartOf="@+id/home_page_search2"
-        app:layout_constraintTop_toBottomOf="@+id/home_page_search2" />
+        app:layout_constraintStart_toStartOf="@+id/post_news_title"
+        app:layout_constraintTop_toBottomOf="@+id/post_news_title" />
 
     <ImageButton
         android:id="@+id/upload_head_img_button"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:backgroundTint="@color/transparent"
         android:scaleType="centerInside"
         android:src="@drawable/add_image"
         app:layout_constraintBottom_toBottomOf="@+id/upload_thumbnails_button"
-        app:layout_constraintEnd_toEndOf="@+id/home_page_search2"
+        app:layout_constraintEnd_toEndOf="@+id/post_news_title"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toTopOf="@+id/upload_thumbnails_button" />
 
@@ -124,5 +124,14 @@
         app:layout_constraintEnd_toEndOf="@+id/upload_head_img_button"
         app:layout_constraintStart_toStartOf="@+id/upload_head_img_button"
         app:layout_constraintTop_toBottomOf="@+id/upload_head_img_button" />
+
+    <ImageButton
+        android:id="@+id/post_news_ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/transparent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView6"
+        app:srcCompat="@drawable/ok_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
