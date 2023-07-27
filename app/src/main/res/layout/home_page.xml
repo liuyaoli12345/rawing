@@ -24,7 +24,7 @@
             android:id="@+id/home_page_temperature"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="18˚"
+            android:text="@string/n_a"
             android:textSize="37sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,15 +34,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="北京 晴"
+            android:text="@string/weather_page_loading"
             app:layout_constraintStart_toEndOf="@+id/home_page_temperature"
             app:layout_constraintTop_toTopOf="@+id/home_page_temperature" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/home_page_feels_like_temp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="89 良"
+            android:text="@string/weather_page_loading"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="@+id/home_page_site_weather"
             app:layout_constraintTop_toBottomOf="@+id/home_page_site_weather" />

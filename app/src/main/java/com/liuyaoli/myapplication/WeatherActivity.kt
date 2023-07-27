@@ -55,6 +55,11 @@ class WeatherActivity : AppCompatActivity() {
         })
     }
 
+    override fun onDestroy() {
+        recyclerView.adapter = null
+        super.onDestroy()
+    }
+
     private fun updateUI(weatherData: WeatherData){
         val temperatureTextView = findViewById<TextView>(R.id.weather_page_temp)
         temperatureTextView.text= "${weatherData.temperature}˚"
@@ -103,6 +108,7 @@ class WeatherActivity : AppCompatActivity() {
                             weatherViewModel.getWeatherData(location.latitude, location.longitude)
                             Log.i("qwerty", "Try get weather data")
                         }
+                        fusedLocationClient.removeLocationUpdates(this)
                     }
                 },
                 Looper.myLooper()

@@ -105,6 +105,8 @@ class HomeFragment : Fragment() {
             temperatureTextView.text= "${weatherData.temperature}˚"
             val weatherDescriptionTextView = weatherLayout.findViewById<TextView>(R.id.home_page_site_weather)
             weatherDescriptionTextView.text = weatherData.weatherDescription
+            val weatherFeelsLikeTempTextView = weatherLayout.findViewById<TextView>(R.id.home_page_feels_like_temp)
+            weatherFeelsLikeTempTextView.text = "体感${weatherData.feelsLikeTemp}˚"
         })
 
         // Observe the error message and handle errors if any
@@ -137,6 +139,11 @@ class HomeFragment : Fragment() {
         showRecyclerView()
     }
 
+    override fun onDestroyView() {
+        recyclerView.adapter = null
+        super.onDestroyView()
+    }
+
     private var queryLocationAgain = false
     private fun getWeatherData() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
@@ -154,6 +161,7 @@ class HomeFragment : Fragment() {
                             weatherViewModel.getWeatherData(location.latitude, location.longitude)
                             Log.i("qwerty", "Try get weather data")
                         }
+                        fusedLocationClient.removeLocationUpdates(this)
                     }
                 },
                 Looper.myLooper()

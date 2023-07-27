@@ -58,9 +58,10 @@ class WeatherRepository {
             .getString("description")
         val maxTemp = jsonObject.getJSONObject("main").getDouble("temp_max").toInt()
         val minTemp = jsonObject.getJSONObject("main").getDouble("temp_min").toInt()
+        val feelsLikeTemp = jsonObject.getJSONObject("main").getDouble("feels_like").toInt()
         val latitude = jsonObject.getJSONObject("coord").getDouble("lat")
         val longitude = jsonObject.getJSONObject("coord").getDouble("lon")
-        return WeatherData(temperature, weatherDescription, maxTemp, minTemp, latitude, longitude)
+        return WeatherData(temperature, weatherDescription, maxTemp, minTemp, feelsLikeTemp, latitude, longitude)
     }
 
 }
