@@ -76,18 +76,17 @@ class HomeFragment : Fragment() {
     private var searchContent = ""
     private var TAG = "abcdefg"
     private var mStrings = listOf(
-        "1","2","3","4","5"
+        "1", "2", "3", "4", "5"
     )
+
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         view = inflater.inflate(layout.home_page, container, false)
         db = NewsDatabase.getInstance(this.requireContext())
         searchBar = view.findViewById(R.id.home_page_search)
         homeMotion = view.findViewById(R.id.home_page_motion_layout)
-        searchFoundList =  view.findViewById(R.id.search_list_view)
+        searchFoundList = view.findViewById(R.id.search_list_view)
         weatherLayout = view.findViewById(R.id.home_page_weather)
         setUpSearchBar()
         showRecyclerView()
@@ -101,11 +100,14 @@ class HomeFragment : Fragment() {
 
         // Observe the weather data and update UI when data changes
         weatherViewModel.weatherData.observe(this.viewLifecycleOwner, Observer { weatherData ->
-            val temperatureTextView = weatherLayout.findViewById<TextView>(R.id.home_page_temperature)
-            temperatureTextView.text= "${weatherData.temperature}˚"
-            val weatherDescriptionTextView = weatherLayout.findViewById<TextView>(R.id.home_page_site_weather)
+            val temperatureTextView =
+                weatherLayout.findViewById<TextView>(R.id.home_page_temperature)
+            temperatureTextView.text = "${weatherData.temperature}˚"
+            val weatherDescriptionTextView =
+                weatherLayout.findViewById<TextView>(R.id.home_page_site_weather)
             weatherDescriptionTextView.text = weatherData.weatherDescription
-            val weatherFeelsLikeTempTextView = weatherLayout.findViewById<TextView>(R.id.home_page_feels_like_temp)
+            val weatherFeelsLikeTempTextView =
+                weatherLayout.findViewById<TextView>(R.id.home_page_feels_like_temp)
             weatherFeelsLikeTempTextView.text = "体感${weatherData.feelsLikeTemp}˚"
         })
 
@@ -113,7 +115,7 @@ class HomeFragment : Fragment() {
         weatherViewModel.errorMessage.observe(this.viewLifecycleOwner, Observer { errorMessage ->
             // Handle the error, e.g., show a toast or a dialog
             // You may also want to implement some retry mechanism
-            Toast.makeText(this.requireContext(),errorMessage,Toast.LENGTH_SHORT).show()
+            Toast.makeText(this.requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
         })
 
         getWeatherData()
@@ -146,15 +148,18 @@ class HomeFragment : Fragment() {
 
     private var queryLocationAgain = false
     private fun getWeatherData() {
-        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireActivity())
+        val fusedLocationClient =
+            LocationServices.getFusedLocationProviderClient(this.requireActivity())
         Log.i("qwerty", "enter getWeatherData()")
-        if (ContextCompat.checkSelfPermission(this.requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(
+                this.requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
             // Permission is already granted, get the user's location
             val locationRequest = LocationRequest().setInterval(200000).setFastestInterval(200000)
                 .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
             fusedLocationClient.requestLocationUpdates(
-                locationRequest,
-                object : LocationCallback() {
+                locationRequest, object : LocationCallback() {
                     override fun onLocationResult(locationResult: LocationResult) {
                         super.onLocationResult(locationResult)
                         for (location in locationResult.locations) {
@@ -163,12 +168,15 @@ class HomeFragment : Fragment() {
                         }
                         fusedLocationClient.removeLocationUpdates(this)
                     }
-                },
-                Looper.myLooper()
+                }, Looper.myLooper()
             )
-        } else if(!queryLocationAgain){
+        } else if (!queryLocationAgain) {
             // Request location permission
-            ActivityCompat.requestPermissions(this.requireActivity(), arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION), PermissionConstants.LOCATION_PERMISSION_CODE)
+            ActivityCompat.requestPermissions(
+                this.requireActivity(),
+                arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
+                PermissionConstants.LOCATION_PERMISSION_CODE
+            )
             getWeatherData()
         }
     }
@@ -230,25 +238,19 @@ class HomeFragment : Fragment() {
             }
 
             override fun onReceivedError(
-                view: WebView,
-                request: WebResourceRequest,
-                error: WebResourceError
+                view: WebView, request: WebResourceRequest, error: WebResourceError
             ) {
                 super.onReceivedError(view, request, error)
             }
 
             override fun onReceivedHttpError(
-                view: WebView,
-                request: WebResourceRequest,
-                errorResponse: WebResourceResponse
+                view: WebView, request: WebResourceRequest, errorResponse: WebResourceResponse
             ) {
                 super.onReceivedHttpError(view, request, errorResponse)
             }
 
             override fun onReceivedSslError(
-                view: WebView,
-                handler: SslErrorHandler,
-                error: SslError
+                view: WebView, handler: SslErrorHandler, error: SslError
             ) {
                 super.onReceivedSslError(view, handler, error)
             }
@@ -271,18 +273,18 @@ class HomeFragment : Fragment() {
 
     private fun setUpSearchBar() {
 
-        var isOnSearch=false
+        var isOnSearch = false
         // 监听搜索按钮点击事件
         searchBar.setOnClickListener {
             // 当搜索按钮被点击时，触发上升动画
             homeMotion.transitionToState(R.id.end)
-            isOnSearch=true
+            isOnSearch = true
             Log.i("gggg", "搜索框被点击")
         }
 
         searchBar.doAfterTextChanged {
             it?.let {
-                if (it.isEmpty()){
+                if (it.isEmpty()) {
                     searchFoundList.clearTextFilter()
                 } else {
                     searchFoundList.setFilterText(it.toString())
@@ -294,28 +296,27 @@ class HomeFragment : Fragment() {
         val searchButton = view.findViewById<Button>(R.id.home_page_search_button)
 
         searchButton.setOnClickListener {
-            isOnSearch=true
+            isOnSearch = true
             val uri = "https://m.baidu.com/s?word=$searchContent"
             homeMotion.transitionToState(R.id.searching)
             webView.loadUrl(uri)
-            Log.i("gggg","搜索按钮被点击")
+            Log.i("gggg", "搜索按钮被点击")
         }
 
         searchFoundList.setAdapter(
-            ArrayAdapter<Any>(this.requireContext(),
-                android.R.layout.simple_list_item_1,
-                mStrings)
+            ArrayAdapter<Any>(
+                this.requireContext(), android.R.layout.simple_list_item_1, mStrings
+            )
         )
         searchFoundList.setTextFilterEnabled(true);
 
         val callback = requireActivity().addOnBackPressed {
-            if (isOnSearch){
+            if (isOnSearch) {
                 isOnSearch = false
                 homeMotion.transitionToState(R.id.start)
                 Log.i("gggg", "搜索框返回")
                 true
-            } else
-                false
+            } else false
         }
 
 
@@ -334,32 +335,37 @@ class HomeFragment : Fragment() {
         recyclerView = view.findViewById(R.id.homeRecycler)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         var news: List<NewsBriefEntity>?
-        val items = mutableListOf<Any>()
+        var items = mutableListOf<Any>()
         GlobalScope.launch(Dispatchers.IO) {
             news = db.newsBriefDao.getAllNewsBrief()
             withContext(Dispatchers.Main) {
                 news?.let {
-                    for (item in news!!) {
-                        if (item.coverUri.isEmpty()) {
-                            items.add(
-                                PlainTextBean(
-                                    item.newsId!!,
-                                    item.title,
-                                    item.status,
-                                    item.author
-                                )
-                            )
-                        } else {
-                            items.add(
-                                ImgAndTextBean(
-                                    item.newsId!!,
-                                    drawable.simaqian,
-                                    item.title,
-                                    item.status,
-                                    item.author
-                                )
-                            )
+                    if (news!!.isNotEmpty()) {
+                        for (item in news!!) {
+                            if (item.coverUri.isEmpty()) {
+                                items.add(PlainTextBean(item.newsId!!, item.title, item.status, item.author))
+                            } else {
+                                items.add(ImgAndTextBean(item.newsId!!, drawable.simaqian, item.title, item.status, item.author))
+                            }
                         }
+                    } else {
+                        items = listOf<Any>(
+                            PlainTextBean(0, "商鞅：疑事无功，疑行无名", "置顶", "史记"), ImgAndTextBean(
+                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
+                            ), ImgAndTextBean(
+                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
+                            ), ImgAndTextBean(
+                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
+                            ), ImgAndTextBean(
+                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
+                            ), ImgAndTextBean(
+                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
+                            ), ImgAndTextBean(
+                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
+                            ), ImgAndTextBean(
+                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
+                            )
+                        ) as MutableList<Any>
                     }
                 }
                 adapter = HomeAndMineAdapter(items)
@@ -377,8 +383,7 @@ class HomeFragment : Fragment() {
      * @return 注册的回调对象，如果想要移除注册的回调，直接通过调用[OnBackPressedCallback.remove]方法即可。
      */
     fun androidx.activity.ComponentActivity.addOnBackPressed(
-        owner: LifecycleOwner,
-        onBackPressed: () -> Boolean
+        owner: LifecycleOwner, onBackPressed: () -> Boolean
     ): OnBackPressedCallback {
         return backPressedCallback(onBackPressed).also {
             onBackPressedDispatcher.addCallback(owner, it)
@@ -394,7 +399,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun androidx.activity.ComponentActivity.backPressedCallback(onBackPressed: () -> Boolean):OnBackPressedCallback{
+    private fun androidx.activity.ComponentActivity.backPressedCallback(onBackPressed: () -> Boolean): OnBackPressedCallback {
         return object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (!onBackPressed()) {

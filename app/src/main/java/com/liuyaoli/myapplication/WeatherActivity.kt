@@ -5,6 +5,9 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.view.animation.LinearInterpolator
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.viewModels
@@ -42,6 +45,8 @@ class WeatherActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
+
+        showWeatherTransparent()
 
         weatherViewModel = ViewModelLazy(WeatherViewModel::class, { viewModelStore }, {
             defaultViewModelProviderFactory
@@ -92,6 +97,15 @@ class WeatherActivity : AppCompatActivity() {
     }
 
     private var queryLocationAgain = false
+
+    private fun showWeatherTransparent() {
+        val weatherTransparentAnim = findViewById<TextView>(R.id.weather_page_temp)
+
+        val anim = AnimationUtils.loadAnimation(this, R.anim.weather_transparent_anim)
+        anim.interpolator = LinearInterpolator()
+        anim.repeatCount = Animation.INFINITE
+        weatherTransparentAnim?.startAnimation(anim)
+    }
     private fun getWeatherData() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
         Log.i("qwerty", "enter getWeatherData()")
