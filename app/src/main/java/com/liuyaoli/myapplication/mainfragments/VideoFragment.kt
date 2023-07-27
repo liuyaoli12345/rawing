@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.liuyaoli.myapplication.R
-import com.liuyaoli.myapplication.homerecycler.HomeAdapter
 import com.liuyaoli.myapplication.videorecycler.VideoAdapter
 import com.liuyaoli.myapplication.videorecycler.VideoBean
 

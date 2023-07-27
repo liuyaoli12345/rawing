@@ -1,4 +1,4 @@
-package com.liuyaoli.myapplication.homerecycler
+package com.liuyaoli.myapplication.homeandminerecycler
 
 import android.view.View
 import android.widget.TextView

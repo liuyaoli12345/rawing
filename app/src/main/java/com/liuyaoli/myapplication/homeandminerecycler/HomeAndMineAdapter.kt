@@ -1,4 +1,4 @@
-package com.liuyaoli.myapplication.homerecycler
+package com.liuyaoli.myapplication.homeandminerecycler
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.liuyaoli.myapplication.NewsContentActivity
 import com.liuyaoli.myapplication.R
 
-class HomeAdapter(private val items: List<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class HomeAndMineAdapter(private val items: List<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val VIEW_TYPE_PLAINTEXT = 0
         private const val VIEW_TYPE_IMG_AND_TEXT = 1

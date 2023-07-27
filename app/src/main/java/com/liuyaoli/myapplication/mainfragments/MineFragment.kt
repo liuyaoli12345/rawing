@@ -2,32 +2,30 @@ package com.liuyaoli.myapplication.mainfragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
-import android.view.animation.LinearInterpolator
-import android.widget.ImageButton
-import androidx.constraintlayout.widget.ConstraintLayout
+import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.liuyaoli.myapplication.PostNewsActivity
+import com.google.android.material.imageview.ShapeableImageView
+import com.liuyaoli.myapplication.LogInActivity
 import com.liuyaoli.myapplication.R
-import com.liuyaoli.myapplication.WeatherActivity
 import com.liuyaoli.myapplication.database.NewsDatabase
-import com.liuyaoli.myapplication.database.UserDatabase
 import com.liuyaoli.myapplication.database.entity.NewsBriefEntity
 import com.liuyaoli.myapplication.homeandminerecycler.HomeAndMineAdapter
 import com.liuyaoli.myapplication.homeandminerecycler.ImgAndTextBean
 import com.liuyaoli.myapplication.homeandminerecycler.PlainTextBean
+import com.liuyaoli.myapplication.utils.LoggedInUserManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class ProfileFragment : Fragment() {
+class MineFragment : Fragment() {
 
     //逻辑和主页面相似
     //首先从数据库取得当前用户，再将当前用户的id、用户名渲染到顶部
@@ -35,33 +33,88 @@ class ProfileFragment : Fragment() {
 
     private lateinit var view: View
     private lateinit var recyclerView: RecyclerView
-    private lateinit var userDb: UserDatabase
+//    private lateinit var userDb: UserDatabase
     private lateinit var newsDb: NewsDatabase
+    private lateinit var adapter: HomeAndMineAdapter
+    private lateinit var loginButton: Button
+    private var isLoggedIn = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        view = inflater.inflate(R.layout.home_page, container, false)
+        view = inflater.inflate(R.layout.mine_page, container, false)
         newsDb = NewsDatabase.getInstance(this.requireContext())
-        showRecyclerView()
+        isLoggedIn = LoggedInUserManager.checkIfLoggedIn(this.requireContext())
+        loginButton = view.findViewById<Button>(R.id.mine_sign_in_button)
+//        userDb = UserDatabase.getInstance(this.requireContext())
+        showUserAndRecyclerView()
+//        showRecyclerView()
+        Log.i("abcdefg", isLoggedIn.toString())
+        if (!isLoggedIn) {
+            setUpLoginButton()
+        } else{
+            setLoginToLogOut()
+        }
         return view
     }
 
     override fun onResume() {
         super.onResume()
-        showRecyclerView()
+        isLoggedIn = LoggedInUserManager.checkIfLoggedIn(this.requireContext())
+        if (!LoggedInUserManager.checkIfLoggedIn(this.requireContext())){
+            setUpLoginButton()
+            showUserAndRecyclerView()
+        } else{
+            setLoginToLogOut()
+            showUserAndRecyclerView()
+        }
+//        showRecyclerView()
+    }
+
+    private fun setUpLoginButton(){
+//        loginButton.visibility = View.VISIBLE
+        loginButton.text = "登录"
+        loginButton.setOnClickListener {
+            val intent = Intent(this.context, LogInActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun setLoginToLogOut(){
+        loginButton.text = "注销"
+        loginButton.setOnClickListener {
+            LoggedInUserManager.clearUserLoginStatus(this.requireContext())
+            onResume()
+        }
+    }
+
+    private fun showUserAndRecyclerView(){
+        val avatar = view.findViewById<ShapeableImageView>(R.id.mine_avatar)
+        val userName = view.findViewById<TextView>(R.id.mine_user_name)
+        val userId = view.findViewById<TextView>(R.id.mine_user_id)
+        if (isLoggedIn){
+            avatar.setImageResource(R.drawable.basketball_boy)
+            val author = LoggedInUserManager.getLoggedInUserName(this.requireContext())
+            userName.text = author
+            userId.text = LoggedInUserManager.getLoggedInUserId(this.requireContext())
+            showRecyclerView(author)
+        } else {
+            avatar.setImageResource(R.drawable.basketball_boy)
+            userName.text = "登录后显示用户名"
+            userId.text = "登录后显示id"
+        }
     }
 
 
-    private fun showRecyclerView() {
-        recyclerView = view.findViewById(R.id.homeRecycler)
+    private fun showRecyclerView(author: String) {
+        recyclerView = view.findViewById(R.id.mine_recycler)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         var news: List<NewsBriefEntity>?
         val items = mutableListOf<Any>()
         GlobalScope.launch(Dispatchers.IO) {
-            news = db.newsBriefDao.getAllNewsBrief()
+            news = newsDb.newsBriefDao.findNewsBriefByUserName(author)
             withContext(Dispatchers.Main) {
                 news?.let {
                     for (item in news!!) {

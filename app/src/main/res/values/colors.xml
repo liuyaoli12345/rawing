@@ -3,4 +3,7 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name='transparent'>#00FFFFFF</color>
+    <color name="light_gray">#FFD3D3D3</color>
+    <color name="silver">#FFC0C0C0</color>
+    <color name="azure">#FFF0FFFF</color>
 </resources>

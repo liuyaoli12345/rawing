@@ -21,6 +21,9 @@ interface NewsBriefDao {
     @Query("SELECT * FROM news_brief_table ORDER BY newsId DESC")
     fun getAllNewsBrief(): List<NewsBriefEntity>?
 
+    @Query("SELECT * FROM news_brief_table WHERE author = :userName")
+    fun findNewsBriefByUserName(userName: String): List<NewsBriefEntity>?
+
     @Query("DELETE FROM news_brief_table")
     fun clear()
 }

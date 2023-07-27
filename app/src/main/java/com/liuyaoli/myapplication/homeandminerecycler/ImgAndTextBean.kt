@@ -1,4 +1,4 @@
-package com.liuyaoli.myapplication.homerecycler
+package com.liuyaoli.myapplication.homeandminerecycler
 
 data class ImgAndTextBean (
     val id : Long,
