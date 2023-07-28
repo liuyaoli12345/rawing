@@ -45,6 +45,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.2.0-alpha10'
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'
+    implementation 'io.github.maitrungduc1410:AVLoadingIndicatorView:2.1.4'
     def room_version = "2.5.2"
     def nav_version = "2.6.0"
     implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"

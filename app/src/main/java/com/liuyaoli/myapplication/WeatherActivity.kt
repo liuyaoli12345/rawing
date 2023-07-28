@@ -1,14 +1,18 @@
 package com.liuyaoli.myapplication
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
+import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.view.animation.LinearInterpolator
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -32,14 +36,50 @@ import com.liuyaoli.myapplication.weatherrecycler.HourlyReportBean
 import com.liuyaoli.myapplication.weatherrecycler.WarningBean
 import com.liuyaoli.myapplication.weatherrecycler.WeatherAdapter
 import com.liuyaoli.myapplication.weatherrecycler.hourlyreportrecycler.HourlyReportItemBean
+import com.wang.avi.AVLoadingIndicatorView
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class WeatherActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: WeatherAdapter
     private lateinit var weatherViewModel: WeatherViewModel
+    private lateinit var weatherLoadingAvi: AVLoadingIndicatorView
+    private lateinit var weatherLoadingBackground: ImageView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.weather_page)
+        weatherLoadingBackground = findViewById(R.id.weather_page_loading_background)
+        val anim = AnimationUtils.loadAnimation(this, R.anim.weather_loading_transparent_anim)
+        anim.interpolator = LinearInterpolator()
+        val animationListener = object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {
+                // 动画开始时执行的操作（可选）
+            }
+            override fun onAnimationEnd(animation: Animation?) {
+                // 动画结束时执行的操作
+                weatherLoadingBackground.visibility = View.GONE // 隐藏View
+            }
+            override fun onAnimationRepeat(animation: Animation?) {
+                // 动画重复时执行的操作（可选）
+            }
+        }
+        anim.setAnimationListener(animationListener)
+        object : Thread(){
+            override fun run() {
+                weatherLoadingAvi = findViewById(R.id.weather_page_avi)
+                runOnUiThread {
+                    weatherLoadingAvi.show()
+                }
+                sleep(3000)
+                runOnUiThread {
+                    weatherLoadingAvi.hide()
+                    weatherLoadingBackground.startAnimation(anim)
+                }
+                super.run()
+            }
+        }.start()
         showRecyclerView()
         val backButton: ImageButton = findViewById(R.id.weatherPageBackButton)
         backButton.setOnClickListener {

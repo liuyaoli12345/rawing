@@ -112,4 +112,27 @@
         app:layout_constraintBottom_toBottomOf="@+id/imageView2"
         app:layout_constraintTop_toTopOf="@+id/guideline2" />
 
+    <ImageView
+        android:id="@+id/weather_page_loading_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="visible"
+        />
+
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/weather_page_avi"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        app:indicatorName="BallScaleMultipleIndicator"
+        style="AVLoadingIndicatorView.Small"
+        app:indicatorColor="@color/silver"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Rawing</string>
     <string name="weather_page_loading">获取中...</string>
     <string name="n_a">N/A</string>
 </resources>
