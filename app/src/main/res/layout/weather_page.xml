@@ -42,7 +42,7 @@
         android:backgroundTint="@color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back_white" />
+        app:srcCompat="@drawable/arrow_left" />
 
     <TextView
         android:id="@+id/weather_page_place"

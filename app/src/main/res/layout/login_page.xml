@@ -13,7 +13,7 @@
         android:backgroundTint="@color/transparent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back_black" />
+        app:srcCompat="@drawable/arrow_left" />
 
     <LinearLayout
         android:layout_width="match_parent"
