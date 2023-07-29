@@ -50,7 +50,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:drawableLeft="@drawable/follow"
+        android:drawableLeft="@drawable/follow_button"
         android:gravity="center"
         android:text="关注"
         android:textSize="15dp"

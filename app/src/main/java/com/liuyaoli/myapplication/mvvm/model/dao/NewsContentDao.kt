@@ -1,11 +1,11 @@
-package com.liuyaoli.myapplication.database.dao
+package com.liuyaoli.myapplication.mvvm.model.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
-import com.liuyaoli.myapplication.database.entity.NewsContentEntity
+import com.liuyaoli.myapplication.mvvm.model.entity.NewsContentEntity
 
 @Dao
 interface NewsContentDao {

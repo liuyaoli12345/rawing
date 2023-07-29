@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.imageview.ShapeableImageView
 import com.liuyaoli.myapplication.LogInActivity
 import com.liuyaoli.myapplication.R
-import com.liuyaoli.myapplication.database.NewsDatabase
-import com.liuyaoli.myapplication.database.entity.NewsBriefEntity
+import com.liuyaoli.myapplication.mvvm.repository.database.NewsDatabase
+import com.liuyaoli.myapplication.mvvm.model.entity.NewsBriefEntity
 import com.liuyaoli.myapplication.homeandminerecycler.HomeAndMineAdapter
 import com.liuyaoli.myapplication.homeandminerecycler.ImgAndTextBean
 import com.liuyaoli.myapplication.homeandminerecycler.PlainTextBean
@@ -123,7 +123,7 @@ class MineFragment : Fragment() {
                         } else {
                             items.add(
                                 ImgAndTextBean(item.newsId!!,
-                                    R.drawable.simaqian,item.title,item.status,item.author)
+                                    "https://files.lsmcloud.top/blog暂无图片.svg",item.title,item.status,item.author)
                             )
                         }
                     }

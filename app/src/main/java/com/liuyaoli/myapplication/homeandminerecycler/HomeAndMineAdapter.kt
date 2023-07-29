@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.liuyaoli.myapplication.NewsContentActivity
 import com.liuyaoli.myapplication.R
+import com.bumptech.glide.Glide
+import com.liuyaoli.myapplication.MyApplication
 
 class HomeAndMineAdapter(private val items: List<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
@@ -70,7 +72,12 @@ class HomeAndMineAdapter(private val items: List<Any>) : RecyclerView.Adapter<Re
             is ImgAndTextViewHolder -> {
                 val imgAndTextBean = item as ImgAndTextBean
                 imgAndTextBean.coverUrl?.let {
-                    holder.ivCover?.setImageResource(it)
+                    Glide.with(MyApplication.context)
+                        .load(it)
+                        .placeholder(R.drawable.place_holder) // 设置占位图
+                        .error(R.drawable.network_err)
+                        .timeout(6000)// 设置加载错误时显示的图片
+                        .into(holder.ivCover)
                 }
 
                 imgAndTextBean.title?.let {

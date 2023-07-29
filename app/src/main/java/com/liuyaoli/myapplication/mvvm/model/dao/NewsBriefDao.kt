@@ -1,11 +1,11 @@
-package com.liuyaoli.myapplication.database.dao
+package com.liuyaoli.myapplication.mvvm.model.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.liuyaoli.myapplication.database.entity.NewsBriefEntity
+import com.liuyaoli.myapplication.mvvm.model.entity.NewsBriefEntity
 
 @Dao
 interface NewsBriefDao {

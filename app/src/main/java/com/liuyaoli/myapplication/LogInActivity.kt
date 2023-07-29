@@ -8,7 +8,7 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
-import com.liuyaoli.myapplication.database.UserDatabase
+import com.liuyaoli.myapplication.mvvm.repository.database.UserDatabase
 import com.liuyaoli.myapplication.utils.Encrypter
 import com.liuyaoli.myapplication.utils.LoggedInUserManager
 import kotlinx.coroutines.Dispatchers

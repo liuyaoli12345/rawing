@@ -1,11 +1,11 @@
-package com.liuyaoli.myapplication.database
+package com.liuyaoli.myapplication.mvvm.repository.database
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.liuyaoli.myapplication.database.dao.UserDao
-import com.liuyaoli.myapplication.database.entity.UserEntity
+import com.liuyaoli.myapplication.mvvm.model.dao.UserDao
+import com.liuyaoli.myapplication.mvvm.model.entity.UserEntity
 
 @Database(entities = [UserEntity::class], version = 4, exportSchema = false)
 abstract class UserDatabase : RoomDatabase() {
@@ -18,7 +18,8 @@ abstract class UserDatabase : RoomDatabase() {
             synchronized(this){
                 var instance = INSTANCE
                 if (instance == null){
-                    instance = Room.databaseBuilder(context.applicationContext,UserDatabase::class.java,"news_database").fallbackToDestructiveMigration().build()
+                    instance = Room.databaseBuilder(context.applicationContext,
+                        UserDatabase::class.java,"news_database").fallbackToDestructiveMigration().build()
                     INSTANCE = instance
                 }
                 return instance

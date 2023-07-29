@@ -11,9 +11,9 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
-import com.liuyaoli.myapplication.database.NewsDatabase
-import com.liuyaoli.myapplication.database.entity.NewsBriefEntity
-import com.liuyaoli.myapplication.database.entity.NewsContentEntity
+import com.liuyaoli.myapplication.mvvm.repository.database.NewsDatabase
+import com.liuyaoli.myapplication.mvvm.model.entity.NewsBriefEntity
+import com.liuyaoli.myapplication.mvvm.model.entity.NewsContentEntity
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -27,6 +27,8 @@ class PostNewsActivity : AppCompatActivity() {
     private var newsTitle: String = ""
     private var newsContext: String = ""
     private var newsAbstract: String = ""
+    private var thumbnailUri: String = ""
+    private var headImgUri: String = ""
     private lateinit var db: NewsDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -55,8 +57,8 @@ class PostNewsActivity : AppCompatActivity() {
             // 在子线程中执行数据库操作
             GlobalScope.launch(Dispatchers.IO) {
 
-                val newsId = db.newsBriefDao.insert(NewsBriefEntity(null,newsTitle,"","刘尧力","热点"))
-                db.newsContentDao.insert(NewsContentEntity(newsId,"",newsAbstract,newsContext))
+                val newsId = db.newsBriefDao.insert(NewsBriefEntity(null,newsTitle,thumbnailUri,"刘尧力","热点"))
+                db.newsContentDao.insert(NewsContentEntity(newsId,headImgUri,newsAbstract,newsContext))
 
                 // UI操作需要回到主线程
                 withContext(Dispatchers.Main) {
@@ -114,6 +116,7 @@ class PostNewsActivity : AppCompatActivity() {
                 if (uri != null) {
                     // 在这里展示选择的图片，可以将 URI 传递给相应的 ImageView 或其他展示图片的组件
                     uploadThumbnailsButton.setImageURI(uri)
+                    thumbnailUri = uri.toString()
                 }
             }
         }
@@ -126,6 +129,7 @@ class PostNewsActivity : AppCompatActivity() {
                 if (uri != null) {
                     // 在这里展示选择的图片，可以将 URI 传递给相应的 ImageView 或其他展示图片的组件
                     uploadHeadImgButton.setImageURI(uri)
+                    headImgUri = uri.toString()
                 }
             }
         }

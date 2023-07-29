@@ -12,7 +12,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/textbox_shape"
-        android:drawableLeft="@drawable/post_news_title"
+        android:drawableLeft="@drawable/news_title"
         android:drawablePadding="10dp"
         android:hint="输入标题"
         android:paddingStart="10dp"
@@ -28,7 +28,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/textbox_shape"
-        android:drawableLeft="@drawable/post_news_abstract"
+        android:drawableLeft="@drawable/news_abstract"
         android:drawablePadding="10dp"
         android:hint="输入摘要"
         android:paddingStart="10dp"
@@ -44,7 +44,7 @@
         android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/textbox_shape"
-        android:drawableLeft="@drawable/post_news_content"
+        android:drawableLeft="@drawable/news_content"
         android:drawablePadding="10dp"
         android:hint="输入正文"
         android:paddingStart="10dp"
@@ -83,7 +83,7 @@
         android:layout_marginTop="15dp"
         android:backgroundTint="@color/transparent"
         android:scaleType="centerInside"
-        android:src="@drawable/add_image"
+        android:src="@drawable/upload_image"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
         app:layout_constraintStart_toStartOf="@+id/post_news_title"
         app:layout_constraintTop_toBottomOf="@+id/post_news_title" />
@@ -94,7 +94,7 @@
         android:layout_height="100dp"
         android:backgroundTint="@color/transparent"
         android:scaleType="centerInside"
-        android:src="@drawable/add_image"
+        android:src="@drawable/upload_image"
         app:layout_constraintBottom_toBottomOf="@+id/upload_thumbnails_button"
         app:layout_constraintEnd_toEndOf="@+id/post_news_title"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -132,6 +132,6 @@
         android:backgroundTint="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textView6"
-        app:srcCompat="@drawable/ok_button" />
+        app:srcCompat="@drawable/confirm_button" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

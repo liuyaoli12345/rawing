@@ -56,7 +56,7 @@
         android:backgroundTint="@color/transparent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/home_page_weather"
-        app:srcCompat="@drawable/add" />
+        app:srcCompat="@drawable/add_button" />
 
 
     <ImageView

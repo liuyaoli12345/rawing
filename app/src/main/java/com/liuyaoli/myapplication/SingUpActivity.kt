@@ -13,8 +13,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import com.google.android.material.imageview.ShapeableImageView
-import com.liuyaoli.myapplication.database.UserDatabase
-import com.liuyaoli.myapplication.database.entity.UserEntity
+import com.liuyaoli.myapplication.mvvm.repository.database.UserDatabase
+import com.liuyaoli.myapplication.mvvm.model.entity.UserEntity
 import com.liuyaoli.myapplication.utils.Encrypter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope

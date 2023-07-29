@@ -30,6 +30,7 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.liuyaoli.myapplication.constants.PermissionConstants
 import com.liuyaoli.myapplication.mvvm.model.WeatherData
+import com.liuyaoli.myapplication.mvvm.viewmodel.NewsViewModel
 import com.liuyaoli.myapplication.mvvm.viewmodel.WeatherViewModel
 import com.liuyaoli.myapplication.weatherrecycler.AirQualityBean
 import com.liuyaoli.myapplication.weatherrecycler.HourlyReportBean
@@ -44,9 +45,9 @@ import kotlinx.coroutines.launch
 class WeatherActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: WeatherAdapter
-    private lateinit var weatherViewModel: WeatherViewModel
     private lateinit var weatherLoadingAvi: AVLoadingIndicatorView
     private lateinit var weatherLoadingBackground: ImageView
+    private val weatherViewModel by viewModels<WeatherViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.weather_page)
@@ -87,10 +88,6 @@ class WeatherActivity : AppCompatActivity() {
         }
 
         showWeatherTransparent()
-
-        weatherViewModel = ViewModelLazy(WeatherViewModel::class, { viewModelStore }, {
-            defaultViewModelProviderFactory
-        }).value
 
         // Manually trigger the observer once in onCreate
        getWeatherData()

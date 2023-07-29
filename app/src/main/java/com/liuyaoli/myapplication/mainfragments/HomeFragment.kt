@@ -35,9 +35,9 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelLazy
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.location.LocationCallback
@@ -49,16 +49,13 @@ import com.liuyaoli.myapplication.R
 import com.liuyaoli.myapplication.R.*
 import com.liuyaoli.myapplication.WeatherActivity
 import com.liuyaoli.myapplication.constants.PermissionConstants
-import com.liuyaoli.myapplication.database.NewsDatabase
-import com.liuyaoli.myapplication.database.entity.NewsBriefEntity
+import com.liuyaoli.myapplication.mvvm.repository.database.NewsDatabase
 import com.liuyaoli.myapplication.homeandminerecycler.HomeAndMineAdapter
 import com.liuyaoli.myapplication.homeandminerecycler.ImgAndTextBean
 import com.liuyaoli.myapplication.homeandminerecycler.PlainTextBean
+import com.liuyaoli.myapplication.mvvm.viewmodel.NewsViewModel
 import com.liuyaoli.myapplication.mvvm.viewmodel.WeatherViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+
 
 
 class HomeFragment : Fragment() {
@@ -72,7 +69,8 @@ class HomeFragment : Fragment() {
     private lateinit var searchFoundList: ListView
     private lateinit var webView: WebView
     private lateinit var weatherLayout: ConstraintLayout
-    private lateinit var weatherViewModel: WeatherViewModel
+    private val weatherViewModel by viewModels<WeatherViewModel>()
+    private val newsViewModel by viewModels<NewsViewModel>()
     private var searchContent = ""
     private var TAG = "abcdefg"
     private var mStrings = listOf(
@@ -92,9 +90,6 @@ class HomeFragment : Fragment() {
         showRecyclerView()
         showWeatherTransparent()
         setUpWebView()
-        weatherViewModel = ViewModelLazy(WeatherViewModel::class, { viewModelStore }, {
-            defaultViewModelProviderFactory
-        }).value
 
         // Get the user's current location's latitude and longitude (You should implement this part)
 
@@ -334,44 +329,22 @@ class HomeFragment : Fragment() {
     private fun showRecyclerView() {
         recyclerView = view.findViewById(R.id.homeRecycler)
         recyclerView.layoutManager = LinearLayoutManager(this.context)
-        var news: List<NewsBriefEntity>?
         var items = mutableListOf<Any>()
-        GlobalScope.launch(Dispatchers.IO) {
-            news = db.newsBriefDao.getAllNewsBrief()
-            withContext(Dispatchers.Main) {
-                news?.let {
-                    if (news!!.isNotEmpty()) {
-                        for (item in news!!) {
-                            if (item.coverUri.isEmpty()) {
-                                items.add(PlainTextBean(item.newsId!!, item.title, item.status, item.author))
-                            } else {
-                                items.add(ImgAndTextBean(item.newsId!!, drawable.simaqian, item.title, item.status, item.author))
-                            }
-                        }
+        newsViewModel.newsBriefData.observe(this.requireActivity(), Observer { newsBriefData ->
+            items.clear()
+            if (newsBriefData != null) {
+                for (item in newsBriefData){
+                    if (item.coverUri.isEmpty()) {
+                        items.add(PlainTextBean(item.newsId!!, item.title, item.status, item.author))
                     } else {
-                        items = listOf<Any>(
-                            PlainTextBean(0, "商鞅：疑事无功，疑行无名", "置顶", "史记"), ImgAndTextBean(
-                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
-                            ), ImgAndTextBean(
-                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
-                            ), ImgAndTextBean(
-                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
-                            ), ImgAndTextBean(
-                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
-                            ), ImgAndTextBean(
-                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
-                            ), ImgAndTextBean(
-                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
-                            ), ImgAndTextBean(
-                                0, drawable.simaqian, "太后：令吾百岁之后，皆鱼肉之矣", "热点", "司马迁"
-                            )
-                        ) as MutableList<Any>
+                        items.add(ImgAndTextBean(item.newsId!!, item.coverUri, item.title, item.status, item.author))
                     }
                 }
-                adapter = HomeAndMineAdapter(items)
-                recyclerView.adapter = adapter
             }
-        }
+            adapter = HomeAndMineAdapter(items)
+            recyclerView.adapter = adapter
+        })
+        newsViewModel.getNewsBriefData()
     }
 
     /**

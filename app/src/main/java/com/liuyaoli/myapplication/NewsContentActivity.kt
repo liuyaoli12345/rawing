@@ -1,11 +1,14 @@
 package com.liuyaoli.myapplication
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.liuyaoli.myapplication.database.NewsDatabase
+import com.bumptech.glide.Glide
+import com.liuyaoli.myapplication.mvvm.repository.database.NewsDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -23,6 +26,8 @@ class NewsContentActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             finish()
         }
+
+
     }
 
     private fun showNews(){
@@ -32,6 +37,7 @@ class NewsContentActivity : AppCompatActivity() {
         val contextText = findViewById<TextView>(R.id.news_content_context)
         val authorText = findViewById<TextView>(R.id.news_content_author)
         val abstractText = findViewById<TextView>(R.id.news_content_abstract)
+        val headImg = findViewById<ImageView>(R.id.news_content_headImg)
         titleText.text = intent.getStringExtra("title")
         authorText.text = intent.getStringExtra("author")
         GlobalScope.launch(Dispatchers.IO) {
@@ -39,6 +45,14 @@ class NewsContentActivity : AppCompatActivity() {
             withContext(Dispatchers.Main){
                 contextText.text = newsContent?.newsContext
                 abstractText.text = newsContent?.newsAbstract
+                if (newsContent != null) {
+                    Glide.with(MyApplication.context)
+                        .load(newsContent.headImgUri)
+                        .placeholder(R.drawable.place_holder) // 设置占位图
+                        .error(R.drawable.network_err)
+                        .timeout(6000)// 设置加载错误时显示的图片
+                        .into(headImg)
+                }
             }
         }
 

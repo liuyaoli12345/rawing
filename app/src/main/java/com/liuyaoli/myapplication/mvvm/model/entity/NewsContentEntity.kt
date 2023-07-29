@@ -1,4 +1,4 @@
-package com.liuyaoli.myapplication.database.entity
+package com.liuyaoli.myapplication.mvvm.model.entity
 
 import androidx.room.Entity
 import androidx.room.ForeignKey
