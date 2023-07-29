@@ -90,6 +90,7 @@
         android:background="@drawable/textbox_shape"
         android:hint="搜索或输入网址"
         android:paddingStart="20dp"
+        android:paddingEnd="100dp"
         android:transitionName="search_bar_transform"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

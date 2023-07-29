@@ -21,6 +21,7 @@ import android.webkit.WebResourceResponse
 import android.webkit.WebSettings
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
@@ -74,7 +75,7 @@ class HomeFragment : Fragment() {
     private var searchContent = ""
     private var TAG = "abcdefg"
     private var mStrings = listOf(
-        "1", "2", "3", "4", "5"
+        "蔡徐坤真的塌房了吗？", "许家印将一切上交国家，每一个家庭要为此承担多少？", "台风登录厦门", "Meta放出大招，开源大模型有何影响？", "bilibili决定不再以视频播放量评判视频热度"
     )
 
     override fun onCreateView(
@@ -303,7 +304,12 @@ class HomeFragment : Fragment() {
                 this.requireContext(), android.R.layout.simple_list_item_1, mStrings
             )
         )
-        searchFoundList.setTextFilterEnabled(true);
+        searchFoundList.setTextFilterEnabled(true)
+        searchFoundList.onItemClickListener = AdapterView.OnItemClickListener { _, _, position, _ ->
+            val selectText = mStrings[position]
+            searchBar.setText(selectText)
+        }
+
 
         val callback = requireActivity().addOnBackPressed {
             if (isOnSearch) {

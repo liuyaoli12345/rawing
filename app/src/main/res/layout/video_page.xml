@@ -15,6 +15,7 @@
         android:background="@drawable/textbox_shape"
         android:hint="搜索或输入网址"
         android:paddingStart="20dp"
+        android:paddingEnd="100dp"
         android:transitionName="search_bar_transform"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,7 +23,7 @@
 
     <Button
         android:id="@+id/video_page_search_button"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:backgroundTint="@color/black"
