@@ -11,8 +11,10 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.google.android.material.imageview.ShapeableImageView
 import com.liuyaoli.myapplication.LogInActivity
+import com.liuyaoli.myapplication.MyApplication
 import com.liuyaoli.myapplication.R
 import com.liuyaoli.myapplication.mvvm.repository.database.NewsDatabase
 import com.liuyaoli.myapplication.mvvm.model.entity.NewsBriefEntity
@@ -95,15 +97,22 @@ class MineFragment : Fragment() {
         val userName = view.findViewById<TextView>(R.id.mine_user_name)
         val userId = view.findViewById<TextView>(R.id.mine_user_id)
         if (isLoggedIn){
-            avatar.setImageResource(R.drawable.basketball_boy)
+            val avatarUri = LoggedInUserManager.getLoggedInUserAvatarUri(this.requireContext())
             val author = LoggedInUserManager.getLoggedInUserName(this.requireContext())
+            Glide.with(this.requireContext())
+                .load(avatarUri)
+                .placeholder(R.drawable.place_holder) // 设置占位图
+                .error(R.drawable.network_err)
+                .timeout(6000)// 设置加载错误时显示的图片
+                .into(avatar)
             userName.text = author
             userId.text = LoggedInUserManager.getLoggedInUserId(this.requireContext())
             showRecyclerView(author)
         } else {
-            avatar.setImageResource(R.drawable.basketball_boy)
+            avatar.setImageResource(R.drawable.default_profile)
             userName.text = "登录后显示用户名"
             userId.text = "登录后显示id"
+            showRecyclerView("")
         }
     }
 
@@ -113,8 +122,15 @@ class MineFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(this.context)
         var news: List<NewsBriefEntity>?
         val items = mutableListOf<Any>()
+        if (author.isEmpty()){
+            items.clear()
+            adapter = HomeAndMineAdapter(items)
+            recyclerView.adapter = adapter
+            return
+        }
         GlobalScope.launch(Dispatchers.IO) {
             news = newsDb.newsBriefDao.findNewsBriefByUserName(author)
+            items.clear()
             withContext(Dispatchers.Main) {
                 news?.let {
                     for (item in news!!) {
@@ -128,6 +144,7 @@ class MineFragment : Fragment() {
                         }
                     }
                 }
+                Log.i("ttttt","准备更新recyclerView")
                 adapter = HomeAndMineAdapter(items)
                 recyclerView.adapter = adapter
             }

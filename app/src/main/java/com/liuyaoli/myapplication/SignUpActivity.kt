@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -20,14 +19,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.lang.Exception
 
-class SingUpActivity : AppCompatActivity() {
+class SignUpActivity : AppCompatActivity() {
 
     private lateinit var userDb: UserDatabase
-    private lateinit var userName: String
-    private lateinit var userPwd: String
-    private lateinit var userId: String
-    private lateinit var userAvatar: String
+    private var userName = ""
+    private var userPwd = ""
+    private var userId = ""
+    private var userAvatar = ""
     private lateinit var avatarButton: ShapeableImageView
 
     override fun onCreate(savedInstanceState: Bundle?){
@@ -44,6 +44,7 @@ class SingUpActivity : AppCompatActivity() {
     private fun setUpAvatar(){
         avatarButton = findViewById<ShapeableImageView>(R.id.sign_up_avatar)
         avatarButton.setOnClickListener {
+//            StoragePermissionUtils.requestReadExternalStoragePermission(this)
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             avatarPickImage.launch(intent)
         }
@@ -78,12 +79,21 @@ class SingUpActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             GlobalScope.launch {
-                userDb.userDao.insert(UserEntity(userId,userName,userAvatar))
-                withContext(Dispatchers.Main){
-                    //显示"注册成功！"
-                    Toast.makeText(this@SingUpActivity, "注册成功！", Toast.LENGTH_SHORT).show()
-                    finish()
+                try{
+                    userDb.userDao.insert(UserEntity(userId,userName,userAvatar))
+                    withContext(Dispatchers.Main){
+                        //显示"注册成功！"
+                        Toast.makeText(this@SignUpActivity, "注册成功！", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
                 }
+                catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        // 处理数据库错误，显示错误提示给用户
+                        Toast.makeText(this@SignUpActivity, "数据库错误：" + "用户名或id已存在", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
             }
         }
     }

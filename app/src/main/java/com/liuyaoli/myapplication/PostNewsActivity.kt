@@ -1,10 +1,12 @@
 package com.liuyaoli.myapplication
 
+import StoragePermissionUtils
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
@@ -98,10 +100,12 @@ class PostNewsActivity : AppCompatActivity() {
         uploadThumbnailsButton = findViewById(R.id.upload_thumbnails_button)
         uploadHeadImgButton = findViewById(R.id.upload_head_img_button)
         uploadThumbnailsButton.setOnClickListener {
+//            StoragePermissionUtils.requestReadExternalStoragePermission(this)
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             thumbnailsPickImage.launch(intent)
         }
         uploadHeadImgButton.setOnClickListener {
+//            StoragePermissionUtils.requestReadExternalStoragePermission(this)
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             headImgPickImage.launch(intent)
         }
@@ -130,6 +134,7 @@ class PostNewsActivity : AppCompatActivity() {
                     // 在这里展示选择的图片，可以将 URI 传递给相应的 ImageView 或其他展示图片的组件
                     uploadHeadImgButton.setImageURI(uri)
                     headImgUri = uri.toString()
+                    Log.i("yyyyy",uri.toString())
                 }
             }
         }

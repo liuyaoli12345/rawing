@@ -19,8 +19,8 @@ import kotlinx.coroutines.withContext
 class LogInActivity: AppCompatActivity() {
 
     private lateinit var userDb: UserDatabase
-    private lateinit var userName: String
-    private lateinit var userPwd: String
+    private var userName = ""
+    private var userPwd = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -75,7 +75,7 @@ class LogInActivity: AppCompatActivity() {
             }
         }
         signUpButton.setOnClickListener {
-            intent = Intent(this,SingUpActivity::class.java)
+            intent = Intent(this,SignUpActivity::class.java)
             startActivity(intent)
         }
     }

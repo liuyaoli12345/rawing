@@ -22,9 +22,10 @@ class VideoStreamActivity : AppCompatActivity() {
     private val videoUri = listOf<String>(
         "https://files.lsmcloud.top/xyq_playing.mp4",
         "https://files.lsmcloud.top/dog_and_cat_playing.mp4",
-        "https://files.lsmcloud.top/xyq_playing.mp4",
-        "https://files.lsmcloud.top/dog_and_cat_playing.mp4",
-        "https://files.lsmcloud.top/xyq_playing.mp4",
+        "https://files.lsmcloud.top/guojichen.mp4",
+        "https://files.lsmcloud.top/ewujushi.mp4",
+        "https://files.lsmcloud.top/huaqingmaigua.mp4",
+        "https://files.lsmcloud.top/aimakevideo.mp4"
         )
 
     override fun onCreate(savedInstanceState: Bundle?) {

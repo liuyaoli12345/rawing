@@ -15,7 +15,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearance="@style/CircleStyle"
-        app:srcCompat="@drawable/basketball_boy" />
+        app:srcCompat="@drawable/default_profile" />
 
     <TextView
         android:id="@+id/mine_user_name"
