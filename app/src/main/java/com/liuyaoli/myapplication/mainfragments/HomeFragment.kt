@@ -146,7 +146,7 @@ class HomeFragment : Fragment() {
     private fun getWeatherData() {
         val fusedLocationClient =
             LocationServices.getFusedLocationProviderClient(this.requireActivity())
-        Log.i("qwerty", "enter getWeatherData()")
+//        Log.i("qwerty", "enter getWeatherData()")
         if (ContextCompat.checkSelfPermission(
                 this.requireContext(), android.Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED
@@ -160,7 +160,7 @@ class HomeFragment : Fragment() {
                         super.onLocationResult(locationResult)
                         for (location in locationResult.locations) {
                             weatherViewModel.getWeatherData(location.latitude, location.longitude)
-                            Log.i("qwerty", "Try get weather data")
+//                            Log.i("qwerty", "Try get weather data")
                         }
                         fusedLocationClient.removeLocationUpdates(this)
                     }
@@ -201,7 +201,7 @@ class HomeFragment : Fragment() {
 
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 // 设置不用系统浏览器打开,直接显示在当前Webview
-                Log.i(TAG, "shouldOverrideUrlLoading :" + url)
+//                Log.i(TAG, "shouldOverrideUrlLoading :" + url)
 
                 if (url.startsWith("http")) {
                     view.loadUrl(url)
@@ -230,7 +230,7 @@ class HomeFragment : Fragment() {
             override fun doUpdateVisitedHistory(view: WebView?, url: String?, isReload: Boolean) {
                 super.doUpdateVisitedHistory(view, url, isReload)
                 // webview历史变更的回调，告诉webview历史记录更新。
-                Log.i(TAG, "doUpdateVisitedHistory :" + url)
+//                Log.i(TAG, "doUpdateVisitedHistory :" + url)
             }
 
             override fun onReceivedError(
@@ -255,12 +255,12 @@ class HomeFragment : Fragment() {
         webView!!.webChromeClient = object : WebChromeClient() {
             override fun onProgressChanged(view: WebView?, progress: Int) {
                 super.onProgressChanged(view, progress)
-                Log.i(TAG, "onProgressChanged :" + progress)
+//                Log.i(TAG, "onProgressChanged :" + progress)
             }
 
             override fun onReceivedTitle(view: WebView?, title: String) {
                 super.onReceivedTitle(view, title)
-                Log.i(TAG, "onReceivedTitle :" + title)
+//                Log.i(TAG, "onReceivedTitle :" + title)
             }
         }
 
@@ -275,7 +275,7 @@ class HomeFragment : Fragment() {
             // 当搜索按钮被点击时，触发上升动画
             homeMotion.transitionToState(R.id.end)
             isOnSearch = true
-            Log.i("gggg", "搜索框被点击")
+//            Log.i("gggg", "搜索框被点击")
         }
 
         searchBar.doAfterTextChanged {
@@ -296,7 +296,7 @@ class HomeFragment : Fragment() {
             val uri = "https://m.baidu.com/s?word=$searchContent"
             homeMotion.transitionToState(R.id.searching)
             webView.loadUrl(uri)
-            Log.i("gggg", "搜索按钮被点击")
+//            Log.i("gggg", "搜索按钮被点击")
         }
 
         searchFoundList.setAdapter(
@@ -315,7 +315,7 @@ class HomeFragment : Fragment() {
             if (isOnSearch) {
                 isOnSearch = false
                 homeMotion.transitionToState(R.id.start)
-                Log.i("gggg", "搜索框返回")
+//                Log.i("gggg", "搜索框返回")
                 true
             } else false
         }

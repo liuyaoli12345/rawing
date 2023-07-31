@@ -32,7 +32,7 @@ class NewsContentActivity : AppCompatActivity() {
 
     private fun showNews(){
         val newsId = intent.getLongExtra("id",0)
-        Log.i("abcdefg",newsId.toString())
+//        Log.i("abcdefg",newsId.toString())
         val titleText = findViewById<TextView>(R.id.news_content_title)
         val contextText = findViewById<TextView>(R.id.news_content_context)
         val authorText = findViewById<TextView>(R.id.news_content_author)

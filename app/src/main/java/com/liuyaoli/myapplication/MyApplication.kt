@@ -1,11 +1,8 @@
 package com.liuyaoli.myapplication
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.app.Application
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import com.liuyaoli.myapplication.mvvm.model.entity.NewsBriefEntity
 import com.liuyaoli.myapplication.mvvm.model.entity.NewsContentEntity
 import com.liuyaoli.myapplication.mvvm.repository.database.NewsDatabase

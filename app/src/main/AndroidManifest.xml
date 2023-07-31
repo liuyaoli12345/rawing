@@ -5,9 +5,14 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 
+    <permission
+        android:name="com.liuyaoli.fileprovider.read"
+        android:protectionLevel="normal"/>
+    <permission
+        android:name="com.liuyaoli.fileprovider.write"
+        android:protectionLevel="normal"/>
 
     <application
         android:name="com.liuyaoli.myapplication.MyApplication"
@@ -37,9 +42,11 @@
         <activity android:name=".SignUpActivity"/>
         <provider
             android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.fileprovider"
+            android:authorities="com.liuyaoli.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            android:readPermission="com.liuyaoli.fileprovider.read"
+            android:writePermission="com.liuyaoli.fileprovider.write">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths"/>

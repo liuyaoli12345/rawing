@@ -145,7 +145,7 @@ class WeatherActivity : AppCompatActivity() {
     }
     private fun getWeatherData() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        Log.i("qwerty", "enter getWeatherData()")
+//        Log.i("qwerty", "enter getWeatherData()")
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             // Permission is already granted, get the user's location
             val locationRequest = LocationRequest().setInterval(200000).setFastestInterval(200000)
@@ -157,7 +157,7 @@ class WeatherActivity : AppCompatActivity() {
                         super.onLocationResult(locationResult)
                         for (location in locationResult.locations) {
                             weatherViewModel.getWeatherData(location.latitude, location.longitude)
-                            Log.i("qwerty", "Try get weather data")
+//                            Log.i("qwerty", "Try get weather data")
                         }
                         fusedLocationClient.removeLocationUpdates(this)
                     }

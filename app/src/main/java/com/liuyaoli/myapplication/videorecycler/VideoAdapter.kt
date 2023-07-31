@@ -70,9 +70,9 @@ class VideoAdapter(private val items: List<VideoBean>) : RecyclerView.Adapter<Vi
         videoBean.profile_name?.let {
             holder.tvProfile.text = it
         }
-        Log.i("kkkkkk","添加Listener！")
+//        Log.i("kkkkkk","添加Listener！")
         holder.tvCover.setOnClickListener {
-            Log.i("kkkkkk","被点击了")
+//            Log.i("kkkkkk","被点击了")
             val bundle = Bundle()
             bundle.putInt("videoId", videoBean.videoIdx)
             val intent = Intent(context, VideoStreamActivity :: class.java)

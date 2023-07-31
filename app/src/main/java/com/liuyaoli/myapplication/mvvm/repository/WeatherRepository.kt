@@ -37,10 +37,10 @@ class WeatherRepository {
                 if (response.isSuccessful && !responseData.isNullOrEmpty()) {
                     val weatherData = parseWeatherData(responseData)
                     callback.onSuccess(weatherData)
-                    Log.i("qwerty", responseData.toString())
+//                    Log.i("qwerty", responseData.toString())
                 } else {
                     callback.onFailure("Failed to fetch weather data")
-                    Log.i("qwerty", "request failed")
+//                    Log.i("qwerty", "request failed")
                 }
             }
 

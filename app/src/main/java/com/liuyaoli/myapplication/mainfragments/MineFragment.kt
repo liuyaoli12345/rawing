@@ -139,12 +139,12 @@ class MineFragment : Fragment() {
                         } else {
                             items.add(
                                 ImgAndTextBean(item.newsId!!,
-                                    "https://files.lsmcloud.top/blog暂无图片.svg",item.title,item.status,item.author)
+                                    item.coverUri,item.title,item.status,item.author)
                             )
                         }
                     }
                 }
-                Log.i("ttttt","准备更新recyclerView")
+//                Log.i("ttttt","准备更新recyclerView")
                 adapter = HomeAndMineAdapter(items)
                 recyclerView.adapter = adapter
             }

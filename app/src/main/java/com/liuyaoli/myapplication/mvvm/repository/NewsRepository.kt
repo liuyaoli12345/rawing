@@ -61,7 +61,7 @@ class NewsRepository {
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response){
                 val json = response.body?.string()?.let { JSONObject(it) }
                 json?.let {
-                    Log.i("qwerty", "获取news成功")
+//                    Log.i("qwerty", "获取news成功")
                     val sourceArray = json.getJSONArray("articles")
                     for (i in 0 until sourceArray.length()) {
                         val curNews = sourceArray.get(i) as JSONObject
@@ -70,7 +70,7 @@ class NewsRepository {
                         val coverUri = curNews.get("urlToImage").toString()
                         val abstract = curNews.get("description").toString()
                         val context = curNews.get("content").toString()
-                        Log.i("qwerty",title)
+//                        Log.i("qwerty",title)
                         val newsId = newsDatabase.newsBriefDao.insert(
                             NewsBriefEntity(
                                 null, title, coverUri, author, "头条"

@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity(){
         val transition = TransitionInflater.from(this)
             .inflateTransition(android.R.transition.move)
         window.sharedElementEnterTransition = transition
-
         loadNavBar()
     }
 
