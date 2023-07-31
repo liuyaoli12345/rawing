@@ -10,6 +10,7 @@
 6.拥有视频流功能，由于没有合适的api所以使用了固定的假数据
 7.在开发过程中，使用profiler对内存泄漏进行了一定的处理，附在README中"
 8.使用了file_provider为用户提供图片选择
+9.使用了MotionLayout展示搜索动画
 ```
 
 Profile 分析发现weather Activity中
