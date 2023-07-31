@@ -1,5 +1,6 @@
 package com.liuyaoli.myapplication.mvvm.repository
 
+import android.content.Context
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
@@ -36,9 +37,15 @@ class NewsRepository {
         GlobalScope.launch(Dispatchers.IO) {
             getNewsFromWebToDatabase(callback)
             news = newsDatabase.newsBriefDao.getAllNewsBrief()
-//            withContext(Dispatchers.Main) {
                callback.onBriefSuccess(news)
-//            }
+        }
+    }
+
+    fun getLocalNewsBriefData(callback: NewsDataCallback){
+        var news: List<NewsBriefEntity>?
+        GlobalScope.launch(Dispatchers.IO) {
+            news = newsDatabase.newsBriefDao.getAllNewsBrief()
+            callback.onBriefSuccess(news)
         }
     }
 
@@ -46,9 +53,7 @@ class NewsRepository {
         var news: NewsContentEntity?
         GlobalScope.launch(Dispatchers.IO) {
             news = newsDatabase.newsContentDao.get(id)
-//            withContext(Dispatchers.Main) {
                 callback.onContentSuccess(news)
-//            }
         }
     }
 
@@ -62,6 +67,10 @@ class NewsRepository {
                 val json = response.body?.string()?.let { JSONObject(it) }
                 json?.let {
 //                    Log.i("qwerty", "获取news成功")
+                    val sharedPrefs = MyApplication.context.getSharedPreferences("app_pref", Context.MODE_PRIVATE)
+                    val editor = sharedPrefs.edit()
+                    editor.putBoolean("news_added", true)
+                    editor.apply()
                     val sourceArray = json.getJSONArray("articles")
                     for (i in 0 until sourceArray.length()) {
                         val curNews = sourceArray.get(i) as JSONObject

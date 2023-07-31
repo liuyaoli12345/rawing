@@ -2,4 +2,9 @@
     <string name="app_name">Rawing</string>
     <string name="weather_page_loading">获取中...</string>
     <string name="n_a">N/A</string>
+    <string name="user_id_hint">id:</string>
+    <string name="login_hint">please_login</string>
+    <string name="login_to_see_id">login_to_see_id</string>
+    <string name="mine_mine_news">我的文章</string>
+    <string name="login_to_see_news">登录后查看发布过的文章</string>
 </resources>

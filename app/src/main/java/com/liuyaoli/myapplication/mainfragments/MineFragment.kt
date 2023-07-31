@@ -26,6 +26,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.w3c.dom.Text
 
 class MineFragment : Fragment() {
 
@@ -39,6 +40,7 @@ class MineFragment : Fragment() {
     private lateinit var newsDb: NewsDatabase
     private lateinit var adapter: HomeAndMineAdapter
     private lateinit var loginButton: Button
+    private lateinit var loginHint: TextView
     private var isLoggedIn = false
 
     override fun onCreateView(
@@ -50,6 +52,7 @@ class MineFragment : Fragment() {
         newsDb = NewsDatabase.getInstance(this.requireContext())
         isLoggedIn = LoggedInUserManager.checkIfLoggedIn(this.requireContext())
         loginButton = view.findViewById<Button>(R.id.mine_sign_in_button)
+        loginHint  = view.findViewById(R.id.mine_login_hint)
 //        userDb = UserDatabase.getInstance(this.requireContext())
         showUserAndRecyclerView()
 //        showRecyclerView()
@@ -78,6 +81,7 @@ class MineFragment : Fragment() {
     private fun setUpLoginButton(){
 //        loginButton.visibility = View.VISIBLE
         loginButton.text = "登录"
+        loginHint.visibility = View.VISIBLE
         loginButton.setOnClickListener {
             val intent = Intent(this.context, LogInActivity::class.java)
             startActivity(intent)
@@ -86,6 +90,7 @@ class MineFragment : Fragment() {
 
     private fun setLoginToLogOut(){
         loginButton.text = "注销"
+        loginHint.visibility = View.GONE
         loginButton.setOnClickListener {
             LoggedInUserManager.clearUserLoginStatus(this.requireContext())
             onResume()

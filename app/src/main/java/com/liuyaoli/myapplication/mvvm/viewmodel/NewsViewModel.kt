@@ -46,6 +46,18 @@ class NewsViewModel : ViewModel() {
         })
     }
 
+    fun getLocalNewsBriefData(){
+        newsRepository.getLocalNewsBriefData(object : NewsRepository.NewsDataCallback {
+            override fun onBriefSuccess(newsBriefEntities: List<NewsBriefEntity>?) {
+                _newsBriefsData.postValue(newsBriefEntities)
+            }
+
+            override fun onContentSuccess(newsContentEntity: NewsContentEntity?) {
+
+            }
+        })
+    }
+
     fun getNewsContentData(id : Long){
         newsRepository.getNewsContentData(id, object : NewsRepository.NewsDataCallback{
             override fun onBriefSuccess(newsBriefEntities: List<NewsBriefEntity>?) {

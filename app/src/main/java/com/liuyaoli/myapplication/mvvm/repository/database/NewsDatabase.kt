@@ -9,7 +9,7 @@ import com.liuyaoli.myapplication.mvvm.model.dao.NewsContentDao
 import com.liuyaoli.myapplication.mvvm.model.entity.NewsBriefEntity
 import com.liuyaoli.myapplication.mvvm.model.entity.NewsContentEntity
 
-@Database(entities = [NewsBriefEntity::class, NewsContentEntity::class], version = 3, exportSchema = false)
+@Database(entities = [NewsBriefEntity::class, NewsContentEntity::class], version = 5, exportSchema = false)
 abstract class NewsDatabase : RoomDatabase() {
     abstract val newsBriefDao: NewsBriefDao
     abstract val newsContentDao: NewsContentDao

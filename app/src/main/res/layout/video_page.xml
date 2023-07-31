@@ -5,41 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/video_page_search"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:background="@drawable/textbox_shape"
-        android:hint="搜索或输入网址"
-        android:paddingStart="20dp"
-        android:paddingEnd="100dp"
-        android:transitionName="search_bar_transform"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/video_page_search_button"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
-        android:backgroundTint="@color/black"
-        android:text="搜索"
-        android:transitionName="search_bar_transform"
-        app:layout_constraintBottom_toBottomOf="@+id/video_page_search"
-        app:layout_constraintEnd_toEndOf="@+id/video_page_search"
-        app:layout_constraintTop_toTopOf="@+id/video_page_search" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/video_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/video_page_search"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

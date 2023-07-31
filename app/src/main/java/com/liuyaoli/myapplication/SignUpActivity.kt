@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -41,6 +42,10 @@ class SignUpActivity : AppCompatActivity() {
         onWatchUserPwd()
         setUpSignUpButton()
         setUpAvatar()
+        val backButton: ImageButton = findViewById(R.id.sign_up_back_button)
+        backButton.setOnClickListener {
+            finish()
+        }
     }
 
     private fun setUpAvatar(){

@@ -1,6 +1,7 @@
 package com.liuyaoli.myapplication
 
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -11,11 +12,13 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doAfterTextChanged
 import com.liuyaoli.myapplication.mvvm.repository.database.NewsDatabase
 import com.liuyaoli.myapplication.mvvm.model.entity.NewsBriefEntity
 import com.liuyaoli.myapplication.mvvm.model.entity.NewsContentEntity
+import com.liuyaoli.myapplication.utils.LoggedInUserManager
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -31,11 +34,17 @@ class PostNewsActivity : AppCompatActivity() {
     private var newsAbstract: String = ""
     private var thumbnailUri: String = ""
     private var headImgUri: String = ""
+    private var author: String = ""
     private lateinit var db: NewsDatabase
+    private lateinit var alertDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.post_news_page)
+        if (!LoggedInUserManager.checkIfLoggedIn(this)) {
+            showAlertDialog()
+        }
+        author = LoggedInUserManager.getLoggedInUserName(this)
         val backButton: ImageButton = findViewById(R.id.postNewsBackButton)
         backButton.setOnClickListener {
             finish()
@@ -49,19 +58,58 @@ class PostNewsActivity : AppCompatActivity() {
 //        grantUriPermission("com.liuyaoli.myapplication",Uri.parse("content://com.android.providers.media.documents"),Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
     }
 
+    private fun showAlertDialog() {
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.apply {
+            setTitle("提示") // 设置对话框标题
+            setMessage("请登录后再发新闻") // 设置对话框内容
+            setPositiveButton("知道了") { dialog: DialogInterface, _: Int ->
+                dialog.dismiss() // 关闭对话框
+                finish()
+            }
+            alertDialog = create()
+            alertDialog.show()
+        }
+    }
+
+    // 重写onBackPressed方法，防止用户通过返回键关闭对话框
+//    override fun onBackPressed() {
+//        // 如果对话框正在显示，不执行父类的onBackPressed方法，即阻止返回键关闭对话框
+//        if (alertDialog.isShowing) {
+//            return
+//        }
+//        super.onBackPressed()
+//    }
+
+
     @OptIn(DelicateCoroutinesApi::class)
-    private fun setUpOkButton(){
+    private fun setUpOkButton() {
         val okButton: ImageButton = findViewById(R.id.post_news_ok_button)
         okButton.setOnClickListener {
-            if (newsTitle.isEmpty() || newsAbstract.isEmpty() || newsContext.isEmpty()){
+            if (newsTitle.isEmpty() || newsAbstract.isEmpty() || newsContext.isEmpty()) {
                 Toast.makeText(this, "标题、摘要、正文不能为空", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             // 在子线程中执行数据库操作
             GlobalScope.launch(Dispatchers.IO) {
 
-                val newsId = db.newsBriefDao.insert(NewsBriefEntity(null,newsTitle,thumbnailUri,"刘尧力","热点"))
-                db.newsContentDao.insert(NewsContentEntity(newsId,headImgUri,newsAbstract,newsContext))
+                val newsId = db.newsBriefDao.insert(
+                    NewsBriefEntity(
+                        null,
+                        newsTitle,
+                        thumbnailUri,
+                        author,
+                        "用户发送"
+                    )
+                )
+                db.newsContentDao.insert(
+                    NewsContentEntity(
+                        newsId,
+                        headImgUri,
+                        newsAbstract,
+                        newsContext
+                    )
+                )
 
                 // UI操作需要回到主线程
                 withContext(Dispatchers.Main) {
@@ -120,32 +168,21 @@ class PostNewsActivity : AppCompatActivity() {
         }
 
     }
-    private fun getRealPathFromURI(context: Context, contentUri: Uri): String? {
-        val cursor = context.contentResolver.query(contentUri, null, null, null, null)
-        cursor?.let {
-            it.moveToFirst()
-            val idx = it.getColumnIndex(MediaStore.Images.ImageColumns.DATA)
-            val path = it.getString(idx)
-            it.close()
-            return path
-        }
-        return null
-    }
 
 
     private val thumbnailsPickImage =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
-                if (uri != null) {
-                    contentResolver.takePersistableUriPermission(
-                        uri,
-                        Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
-                    )
-                    // 在这里展示选择的图片，可以将 URI 传递给相应的 ImageView 或其他展示图片的组件
-                    uploadThumbnailsButton.setImageURI(uri)
+            if (uri != null) {
+                contentResolver.takePersistableUriPermission(
+                    uri,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
+                )
+                // 在这里展示选择的图片，可以将 URI 传递给相应的 ImageView 或其他展示图片的组件
+                uploadThumbnailsButton.setImageURI(uri)
 //                    thumbnailUri = Uri.fromFile(File(getRealPathFromURI(this,uri)!!)).toString()
-                    thumbnailUri = uri.toString()
+                thumbnailUri = uri.toString()
 //                    Log.i("ttttt", thumbnailUri)
-                }
+            }
         }
 
     private val headImgPickImage =

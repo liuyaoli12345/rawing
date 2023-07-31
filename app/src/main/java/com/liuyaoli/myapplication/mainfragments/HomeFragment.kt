@@ -1,5 +1,6 @@
 package com.liuyaoli.myapplication.mainfragments
 
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -45,6 +46,7 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.liuyaoli.myapplication.MyApplication
 import com.liuyaoli.myapplication.PostNewsActivity
 import com.liuyaoli.myapplication.R
 import com.liuyaoli.myapplication.R.*
@@ -81,6 +83,7 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
+//        Log.i("ggggg", "start")
         view = inflater.inflate(layout.home_page, container, false)
         db = NewsDatabase.getInstance(this.requireContext())
         searchBar = view.findViewById(R.id.home_page_search)
@@ -132,7 +135,14 @@ class HomeFragment : Fragment() {
         return view
     }
 
+    override fun onStart() {
+        Log.i("ggggg", "start")
+        super.onStart()
+        showRecyclerView()
+    }
+
     override fun onResume() {
+        Log.i("ggggg", "resume")
         super.onResume()
         showRecyclerView()
     }
@@ -168,6 +178,7 @@ class HomeFragment : Fragment() {
             )
         } else if (!queryLocationAgain) {
             // Request location permission
+            queryLocationAgain = true
             ActivityCompat.requestPermissions(
                 this.requireActivity(),
                 arrayOf(android.Manifest.permission.ACCESS_FINE_LOCATION),
@@ -350,7 +361,13 @@ class HomeFragment : Fragment() {
             adapter = HomeAndMineAdapter(items)
             recyclerView.adapter = adapter
         })
-        newsViewModel.getNewsBriefData()
+        val sharedPrefs = MyApplication.context.getSharedPreferences("app_pref", Context.MODE_PRIVATE)
+        if(!sharedPrefs.getBoolean("news_added", false)) {
+//            Log.i("asdf","准备获取新闻")
+            newsViewModel.getNewsBriefData()
+        } else {
+            newsViewModel.getLocalNewsBriefData()
+        }
     }
 
     /**

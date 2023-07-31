@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.liuyaoli.myapplication.mvvm.model.dao.UserDao
 import com.liuyaoli.myapplication.mvvm.model.entity.UserEntity
 
-@Database(entities = [UserEntity::class], version = 4, exportSchema = false)
+@Database(entities = [UserEntity::class], version = 6, exportSchema = false)
 abstract class UserDatabase : RoomDatabase() {
     abstract val userDao: UserDao
     companion object{

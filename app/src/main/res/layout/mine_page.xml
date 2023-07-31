@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:text="篮球少年"
+        android:text="@string/login_hint"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/mine_avatar"
@@ -33,7 +33,7 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="id: "
+        android:text="@string/user_id_hint"
         app:layout_constraintStart_toStartOf="@+id/mine_user_name"
         app:layout_constraintTop_toBottomOf="@+id/mine_user_name" />
 
@@ -41,7 +41,7 @@
         android:id="@+id/mine_user_id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="basketball_boy"
+        android:text="@string/login_to_see_id"
         android:textColor="@android:color/darker_gray"
         app:layout_constraintStart_toEndOf="@+id/textView12"
         app:layout_constraintTop_toBottomOf="@+id/mine_user_name" />
@@ -55,15 +55,17 @@
         android:paddingEnd="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView15" />
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:text="我的文章"
+        android:text="@string/mine_mine_news"
         android:textSize="17sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,6 +82,20 @@
         android:text="登录"
         android:textColor="@color/white"
         android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="@+id/mine_avatar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/mine_avatar" />
+
+    <TextView
+        android:id="@+id/mine_login_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login_to_see_news"
+        android:textAlignment="center"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/mine_recycler" />
 </androidx.constraintlayout.widget.ConstraintLayout>
